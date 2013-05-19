@@ -5,7 +5,7 @@
 # Pry references removed by Jan Lelis <mail@janlelis.de>
 
 module Debundle
-  VERSION = '0.7'
+  VERSION = '0.7.d'
 end
 
 class << Debundle
