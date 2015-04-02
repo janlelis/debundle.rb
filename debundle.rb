@@ -19,7 +19,7 @@ module Debundle
       load 'rubygems/core_ext/kernel_gem.rb'
     end
   rescue => e
-    puts "Debundling failed: #{e.message}"
+    warn "DEBUNDLE.RB FAILED: #{e.class}\n#{e.message}"
   end
 end
 
