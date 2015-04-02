@@ -11,7 +11,6 @@ module Debundle
     if Gem.post_reset_hooks.reject!{ |hook| hook.source_location.first =~ %r{/bundler/} }
       Bundler.preserve_gem_path
       Gem.clear_paths
-      Gem::Specification.reset
       load 'rubygems/core_ext/kernel_require.rb'
       load 'rubygems/core_ext/kernel_gem.rb'
     end
