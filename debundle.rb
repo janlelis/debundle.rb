@@ -1,23 +1,12 @@
 ### START debundle.rb ###
 
-# Copyright (c) Conrad Irwin <conrad.irwin@gmail.com> -- MIT License
-# Source: https://github.com/ConradIrwin/pry-debundle
-# Pry references removed by Jan Lelis <mail@janlelis.de>
+# MIT License
+# Copyright (c) Conrad Irwin <conrad.irwin@gmail.com>
+# Copyright (c) Jan Lelis <mail@janlelis.de>
 
 module Debundle
   VERSION = '1.0.0'
 
-  # Break out of the Bundler jail.
-  #
-  # This can be used to load files in development that are not in your Gemfile (for
-  # example if you want to test something with a tool that you have locally).
-  #
-  # @example
-  #   Debundle.debundle!
-  #   require 'all_the_things'
-  #
-  # See https://github.com/carlhuda/bundler/issues/183 for some background.
-  # 
   def self.debundle!
     return unless defined?(Bundler)
     raise ArgumentError, 'gem version below 2.0 not supported' unless Gem::VERSION.to_i >= 2
@@ -31,15 +20,9 @@ module Debundle
     end
   rescue => e
     puts "Debundling failed: #{e.message}"
-    puts "When reporting bugs to https://github.com/janlelis/debundle.rb, please include:"
-    puts "* gem version: #{Gem::VERSION rescue 'undefined'}"
-    puts "* bundler version: #{Bundler::VERSION rescue 'undefined'}"
-    puts "* ruby version: #{RUBY_VERSION rescue 'undefined'}"
-    puts "* ruby engine: #{RUBY_ENGINE rescue 'undefined'}"
   end
 
   def self.remove_bundler_monkeypatches
-
     Kernel.module_eval do
       def gem(gem_name, *requirements) # :doc:
         skip_list = (ENV['GEM_SKIP'] || "").split(/:/)
