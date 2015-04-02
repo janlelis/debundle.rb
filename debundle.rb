@@ -8,9 +8,6 @@ module Debundle
   VERSION = '1.0.0'
 
   def self.debundle!
-    return unless defined?(Bundler)
-    raise ArgumentError, 'gem version below 2.0 not supported' unless Gem::VERSION.to_i >= 2
-
     if Gem.post_reset_hooks.reject!{ |hook| hook.source_location.first =~ %r{/bundler/} }
       Bundler.preserve_gem_path
       Gem.clear_paths
