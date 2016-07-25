@@ -8,12 +8,17 @@ module Debundle
   VERSION = '1.1.0.pre'
 
   def self.debundle!
-    if Gem.post_reset_hooks.reject!{ |hook| hook.source_location.first =~ %r{/bundler/} }
-      ENV.replace(Bundler::EnvironmentPreserver.new(ENV, %w(GEM_PATH)).backup) if defined? Bundler::EnvironmentPreserver
-      Gem.clear_paths
-      load 'rubygems/core_ext/kernel_require.rb'
-      load 'rubygems/core_ext/kernel_gem.rb'
+    return unless defined?(Bundler)
+    return unless Gem.post_reset_hooks.reject!{ |hook|
+      hook.source_location.first =~ %r{/bundler/}
+    }
+    if defined? Bundler::EnvironmentPreserver
+      ENV.replace(Bundler::EnvironmentPreserver.new(ENV, %w(GEM_PATH)).backup)
     end
+    Gem.clear_paths
+
+    load 'rubygems/core_ext/kernel_require.rb'
+    load 'rubygems/core_ext/kernel_gem.rb'
   rescue => e
     warn "DEBUNDLE.RB FAILED: #{e.class}\n#{e.message}"
   end
