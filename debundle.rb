@@ -5,7 +5,7 @@
 # Copyright (c) Jan Lelis <mail@janlelis.de>
 
 module Debundle
-  VERSION = '1.1.0.pre'
+  VERSION = '1.1.0'
 
   def self.debundle!
     return unless defined?(Bundler)
