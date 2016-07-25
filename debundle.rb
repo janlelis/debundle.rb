@@ -28,7 +28,11 @@ class << Debundle
 
     if rubygems_18_or_better?
       if Gem.post_reset_hooks.reject!{ |hook| hook.source_location.first =~ %r{/bundler/} }
-        Bundler.preserve_gem_path
+        if defined? Bundler::EnvironmentPreserver
+          ENV.replace(Bundler::EnvironmentPreserver.new(ENV, %w(GEM_PATH)).backup)
+        else
+          Bundler.preserve_gem_path
+        end
         Gem.clear_paths
         Gem::Specification.reset
         remove_bundler_monkeypatches
